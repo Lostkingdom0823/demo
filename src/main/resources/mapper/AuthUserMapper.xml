@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lostkingdom.demo.mapper.AuthUserMapper">
+
+    <resultMap id="users" type="com.lostkingdom.demo.entity.AuthUser">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_timestamp" property="createTimestamp" jdbcType="TIMESTAMP"/>
+
+        <collection property="userRoles" resultMap="userRoles"/>
+    </resultMap>
+
+    <resultMap id="userRoles" type="com.lostkingdom.demo.entity.AuthRole">
+        <id column="role_id" property="id" jdbcType="BIGINT"/>
+        <result column="role_name" property="name" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="create_timestamp" property="createTimestamp" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectUser" resultMap="users" parameterType="java.lang.String">
+        SELECT t1.*,t2.name role_name,t2.status,t2.create_timestamp,t2.description,t2.id role_id FROM auth_user t1
+        left join auth_user_role mid on t1.id = mid.user_id
+        left join auth_role t2 on t2.id=mid.role_id
+        where t1.username = #{username}
+    </select>
+    
+    <select id="getAllAuthUser" resultType="com.lostkingdom.demo.entity.AuthUser">
+        SELECT * FROM auth_user
+    </select>
+
+    <select id="getAllAuthUserById" parameterType="java.lang.Long" resultType="com.lostkingdom.demo.entity.AuthUser">
+        SELECT * FROM auth_user where id = #{id}
+    </select>
+
+    <select id="getAllAuthUserByUsername" parameterType="java.lang.String" resultType="com.lostkingdom.demo.entity.AuthUser">
+        SELECT * FROM auth_user where username = #{username}
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+server:
+  port: 8888
+  error:
+    path: /error
+
+spring:
+  profiles:
+    active: dev
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value:
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.lostkingdom.demo.entity
+  type-aliases-super-type: java.lang.Object
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #type-handlers-package: com.lostkingdom.demo.typeHandler
+  #type-enums-package: com.lostkingdom.demo.enums
+
+# jwt
+jwt:
+  config:
+    enabled: true
+    key-location: felordcn.jks
+    key-alias: lostland
+    key-pass: 123456
+    iss: lostland.cn
+    sub: all
+    access-exp-days: 1
+    refresh-exp-days: 90

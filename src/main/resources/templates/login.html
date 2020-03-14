@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--自定义登录页面，如果想要用内存中的用户，想security，自己帮我们校验的话，则提交地址必须是 /login -->
+<form class="form-signin" method="post" action="/login">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <p>
+        <label for="username" class="sr-only">Username</label>
+        <!-- 这里的 username，password 也不能改动，因为security帮我们校验的时候，就是用它来接受参数的-->
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
+               autofocus="">
+    </p>
+    <p>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+    </p>
+    <!-- 本来官网上给出这个东西的，但是不知道，为啥不会获取到对应的值，因此在上面配置的时候，直接关闭 csrf  -->
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+
+</body>
+</html>
