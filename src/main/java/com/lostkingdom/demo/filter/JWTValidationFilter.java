@@ -2,13 +2,11 @@ package com.lostkingdom.demo.filter;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
-import com.lostkingdom.demo.jwt.JWTProperties;
 import com.lostkingdom.demo.jwt.JWTTokenGenerator;
 import com.lostkingdom.demo.jwt.JWTTokenPair;
 import com.lostkingdom.demo.jwt.JWTTokenStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,7 +18,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -74,6 +71,7 @@ public class JWTValidationFilter extends OncePerRequestFilter {
             }
 
         }
+        filterChain.doFilter(request, response);
     }
 
     private void authenticationTokenHandle(String jwtToken, HttpServletRequest request) throws AuthenticationException {

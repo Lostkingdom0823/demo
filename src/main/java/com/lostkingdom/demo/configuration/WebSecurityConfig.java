@@ -76,7 +76,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JWTValidationFilter jwtValidationFilter;
 
-    private static final String LOGIN_PROCESSING_URL = "/process";
+    @Autowired
+    PreLoginFilter preLoginFilter;
+
 
     /**
      *
@@ -105,6 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/static/**").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
+                .addFilterBefore(preLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginProcessingUrl("/login")
@@ -146,92 +149,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.png");
     }
 
-    @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, e) -> {
-            Message message = new Message(CommonExceptionEnums.AUTHORITY_FAILED);
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setCharacterEncoding("utf-8");
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            PrintWriter printWriter = response.getWriter();
-            printWriter.print(message);
-            printWriter.flush();
-            printWriter.close();
-        };
-    }
 
-    @Bean
-    public JWTValidationFilter jwtValidationFilter(JWTTokenGenerator jwtTokenGenerator, JWTTokenStorage jwtTokenStorage,
-                                                   AuthenticationEntryPoint authenticationEntryPoint){
-        return new JWTValidationFilter(jwtTokenGenerator,jwtTokenStorage,authenticationEntryPoint);
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
-        return (request, response, e) -> {
-            Message message = new Message(CommonExceptionEnums.ACCESS_DENIED);
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.setCharacterEncoding("utf-8");
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            PrintWriter printWriter = response.getWriter();
-            printWriter.print(message);
-            printWriter.flush();
-            printWriter.close();
-        };
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(JWTTokenGenerator jwtTokenGenerator) {
-        return (request, response, authentication) -> {
-            if (response.isCommitted()) {
-                log.debug("Response has already been committed");
-                return;
-            }
-            Map<String, Object> map = new HashMap<>(5);
-            map.put("time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            map.put("flag", "success_login");
-            User principal = (User) authentication.getPrincipal();
-
-            String username = principal.getUsername();
-            Collection<GrantedAuthority> authorities = principal.getAuthorities();
-            Set<String> roles = new HashSet<>();
-            if (CollectionUtil.isNotEmpty(authorities)) {
-                for (GrantedAuthority authority : authorities) {
-                    String roleName = authority.getAuthority();
-                    roles.add(roleName);
-                }
-            }
-
-            JWTTokenPair jwtTokenPair = jwtTokenGenerator.jwtTokenPair(username, roles, null);
-
-            map.put("access_token", jwtTokenPair.getAccessToken());
-            map.put("refresh_token", jwtTokenPair.getRefreshToken());
-            response.setHeader("Authorization", jwtTokenPair.getAccessToken());
-
-            ResponseUtil.responseJsonWriter(response, RestBody.okData(map, "登录成功"));
-        };
-    }
-
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return (request, response, exception) -> {
-            if (response.isCommitted()) {
-                log.debug("Response has already been committed");
-                return;
-            }
-            Map<String, Object> map = new HashMap<>(2);
-
-            map.put("time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            map.put("flag", "failure_login");
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            ResponseUtil.responseJsonWriter(response, RestBody.build(HttpStatus.UNAUTHORIZED.value(), map, "认证失败","-9999"));
-        };
-    }
-
-    @Bean
-    public PreLoginFilter preLoginFilter() {
-        return new PreLoginFilter(LOGIN_PROCESSING_URL, null);
-    }
 
     class CustomLogoutHandler implements LogoutHandler {
         @Override

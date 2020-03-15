@@ -16,7 +16,8 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 public class MainThreadInitConfig implements ApplicationRunner{
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        initThread();
+        //initThread();
+        return;
     }
 
 

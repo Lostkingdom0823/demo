@@ -11,6 +11,7 @@ import com.lostkingdom.demo.mapper.AuthUserMapper;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,6 +62,11 @@ public class LoginController extends BaseController {
         } catch (IOException e) {
         }
 
+    }
+
+    @RequestMapping(value = "getToken",method = RequestMethod.POST)
+    public String getToken(AuthUser authUser){
+        return JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getDetails());
     }
 
 }
