@@ -1,35 +1,18 @@
 package com.lostkingdom.demo.configuration;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lostkingdom.demo.entity.Rest;
-import com.lostkingdom.demo.entity.RestBody;
-import com.lostkingdom.demo.enums.CommonExceptionEnums;
 import com.lostkingdom.demo.filter.JWTValidationFilter;
-import com.lostkingdom.demo.filter.LoginPostProcessor;
 import com.lostkingdom.demo.filter.PreLoginFilter;
-import com.lostkingdom.demo.jwt.JWTTokenGenerator;
-import com.lostkingdom.demo.jwt.JWTTokenPair;
-import com.lostkingdom.demo.jwt.JWTTokenStorage;
 import com.lostkingdom.demo.service.CustomUserService;
 import com.lostkingdom.demo.util.ResponseUtil;
 import com.lostkingdom.demo.vo.Message;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -44,10 +27,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 /**
  * @author yin.jiang
@@ -103,7 +82,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/test").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
@@ -166,22 +144,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             User user = (User) authentication.getPrincipal();
             String username = user.getUsername();
             log.info("username: {}  is offline now", username);
-
-
-            responseJsonWriter(response, RestBody.ok("退出成功"));
+            ResponseUtil.responseJsonWriter(response, Message.success());
         }
 
-        private void responseJsonWriter(HttpServletResponse response, Rest rest) throws IOException {
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.setCharacterEncoding("utf-8");
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            ObjectMapper objectMapper = new ObjectMapper();
-            String resBody = objectMapper.writeValueAsString(rest);
-            PrintWriter printWriter = response.getWriter();
-            printWriter.print(resBody);
-            printWriter.flush();
-            printWriter.close();
-        }
     }
 
 }

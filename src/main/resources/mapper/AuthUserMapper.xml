@@ -9,6 +9,11 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="create_timestamp" property="createTimestamp" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="BIGINT"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_timestamp" property="updateTimestamp" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
 
         <collection property="userRoles" resultMap="userRoles"/>
     </resultMap>

@@ -5,11 +5,11 @@ import com.lostkingdom.demo.enums.CommonExceptionEnums;
 import lombok.Data;
 
 @Data
-public class DemoException extends Exception {
+public class DemoException extends RuntimeException {
 
     private CommonExceptionEnums commonExceptionEnums;
 
-    DemoException(CommonExceptionEnums commonExceptionEnums){
+    public DemoException(CommonExceptionEnums commonExceptionEnums){
         this.commonExceptionEnums = commonExceptionEnums;
     }
 

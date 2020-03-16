@@ -10,7 +10,7 @@ import java.util.List;
  * @author yin.jiang
  * @date 2019/8/13 11:34
  */
-public class AuthUser {
+public class AuthUser extends BaseEntity {
 
     @Excel(name = "id",orderNum = "0")
     private Long id;
@@ -22,8 +22,6 @@ public class AuthUser {
     private String name;
     @Excel(name = "状态",orderNum = "4",replace = { "正常_ENABLE", "禁用_DISABLE" })
     private String status;
-    @Excel(name = "创建时间",orderNum = "5", databaseFormat = "yyyyMMddHHmmss", format = "yyyy-MM-dd")
-    private Date createTimestamp;
     //@Excel(name = "用户角色",orderNum = "6")
     private List<AuthRole> userRoles;
 
@@ -65,14 +63,6 @@ public class AuthUser {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Date getCreateTimestamp() {
-        return createTimestamp;
-    }
-
-    public void setCreateTimeStamp(Date createTimestamp) {
-        this.createTimestamp = createTimestamp;
     }
 
     public List<AuthRole> getUserRoles() {
