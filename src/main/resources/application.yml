@@ -25,7 +25,12 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #type-handlers-package: com.lostkingdom.demo.typeHandler
   #type-enums-package: com.lostkingdom.demo.enums
-
+pagehelper:
+  reasonable: false # 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+  support-methods-arguments: true
+  params: count=countSql
+  row-bounds-with-count: true
+  helper-dialect: mysql
 # jwt
 jwt:
   config:

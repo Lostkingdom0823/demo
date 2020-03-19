@@ -98,9 +98,15 @@ CREATE TABLE `auth_user` (
   `create_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(10) NOT NULL DEFAULT 'ENABLE',
   `username` varchar(100) NOT NULL,
+  `create_by` bigint(20) NOT NULL,
+  `create_username` varchar(100) NOT NULL,
+  `update_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_username` varchar(100) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_user_un` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1239826289265897474 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +115,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'admin','$2a$10$88eye6MrChZP2uqmtldJHuBH0Ex2U2eytIZcr4Jjt/30T4U8a09ii','2019-10-24 03:04:59','ENABLE','admin');
+INSERT INTO `auth_user` VALUES (1,'admin','$2a$10$88eye6MrChZP2uqmtldJHuBH0Ex2U2eytIZcr4Jjt/30T4U8a09ii','2019-10-24 03:04:59','ENABLE','admin',1,'admin',NULL,NULL,NULL,NULL),(1239826289265897473,'test','$2a$10$3lyDdvx8zl2.9Z89VDR1POoRiwx84VwL9qbt6KWd9rgKL4jTBJ3Bq','2020-03-17 08:09:51','ENABLE','test',1,'admin','2020-03-17 08:09:56',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +131,7 @@ CREATE TABLE `auth_user_role` (
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +140,7 @@ CREATE TABLE `auth_user_role` (
 
 LOCK TABLES `auth_user_role` WRITE;
 /*!40000 ALTER TABLE `auth_user_role` DISABLE KEYS */;
-INSERT INTO `auth_user_role` VALUES (1,1,1),(2,1,2);
+INSERT INTO `auth_user_role` VALUES (1,1,1),(2,1,2),(3,1239826289265897473,2);
 /*!40000 ALTER TABLE `auth_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,4 +157,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-14 16:30:34
+-- Dump completed on 2020-03-19 15:01:26

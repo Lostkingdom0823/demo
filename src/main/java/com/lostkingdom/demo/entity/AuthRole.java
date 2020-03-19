@@ -1,12 +1,13 @@
 package com.lostkingdom.demo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author yin.jiang
  * @date 2019/8/13 16:49
  */
-public class AuthRole {
+public class AuthRole implements Serializable {
 
     private Long id;
     private String description;

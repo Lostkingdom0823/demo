@@ -32,9 +32,37 @@
         left join auth_role t2 on t2.id=mid.role_id
         where t1.username = #{username}
     </select>
+
+    <select id="selectById" resultMap="users" parameterType="java.lang.Long">
+        SELECT t1.*,t2.name role_name,t2.status,t2.create_timestamp,t2.description,t2.id role_id FROM auth_user t1
+        left join auth_user_role mid on t1.id = mid.user_id
+        left join auth_role t2 on t2.id=mid.role_id
+        where t1.id = #{id}
+    </select>
     
     <select id="getAllAuthUser" resultType="com.lostkingdom.demo.entity.AuthUser">
         SELECT * FROM auth_user
+    </select>
+
+    <select id="getPagedAuthUser" resultType="com.lostkingdom.demo.entity.AuthUser" parameterType="com.lostkingdom.demo.vo.reqVo.UserAdminReqVo">
+        SELECT * FROM auth_user
+        <where>
+            <if test="name != null and name != ''">
+                and name like "%"#{name}"%"
+            </if>
+            <if test="username != null and username != ''">
+                and username = username
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and create_timestamp &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and create_timestamp &lt;= #{endTime}
+            </if>
+            <if test="phone != null and phone != ''">
+                and create_timestamp &lt;= #{endTime}
+            </if>
+        </where>
     </select>
 
     <select id="getAllAuthUserById" parameterType="java.lang.Long" resultType="com.lostkingdom.demo.entity.AuthUser">

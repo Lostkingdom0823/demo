@@ -1,4 +1,4 @@
-package com.lostkingdom.demo.filter;
+package com.lostkingdom.demo.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;

@@ -37,8 +37,6 @@ public class SecurityHandlerConfiguration {
                 return;
             }
             throw new DemoException(CommonExceptionEnums.NO_AUTHORITY);
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            ResponseUtil.responseJsonWriter(response, new Message(CommonExceptionEnums.NO_AUTHORITY));
         };
     }
 
@@ -50,8 +48,6 @@ public class SecurityHandlerConfiguration {
                 return;
             }
             throw new DemoException(CommonExceptionEnums.ACCESS_DENIED);
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            ResponseUtil.responseJsonWriter(response, new Message(CommonExceptionEnums.ACCESS_DENIED));
         };
     }
 
@@ -94,8 +90,6 @@ public class SecurityHandlerConfiguration {
                 return;
             }
             throw new DemoException(CommonExceptionEnums.AUTHORITY_FAILED);
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            ResponseUtil.responseJsonWriter(response, new Message(CommonExceptionEnums.AUTHORITY_FAILED));
         };
     }
 

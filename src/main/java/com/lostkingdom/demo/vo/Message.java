@@ -16,6 +16,12 @@ public class Message<T> {
 
     }
 
+    public Message(String code,String msg){
+        this.code = code;
+        this.msg = msg;
+        this.currentTimestamp = new Date();
+    }
+
     public Message(CommonExceptionEnums commonExceptionEnums){
         this.currentTimestamp = new Date();
         this.code = commonExceptionEnums.getCode();

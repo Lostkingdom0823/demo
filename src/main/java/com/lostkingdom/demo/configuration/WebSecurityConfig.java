@@ -106,8 +106,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .logout().permitAll(); //注销行为任意访问
-
-        //http.addFilterAt();
     }
 
     /**

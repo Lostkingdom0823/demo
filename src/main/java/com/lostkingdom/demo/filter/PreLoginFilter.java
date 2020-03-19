@@ -3,6 +3,7 @@ package com.lostkingdom.demo.filter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lostkingdom.demo.enums.LoginTypeEnum;
+import com.lostkingdom.demo.util.ParameterRequestWrapper;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
