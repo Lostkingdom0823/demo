@@ -9,6 +9,11 @@ public class BCryptPasswordUtil {
         return bCryptPasswordEncoder.encode(password);
     }
 
+    public static Boolean passwordCheck(String password,String cipherText){
+        BCryptPasswordEncoder bp = new BCryptPasswordEncoder();
+        return bp.matches(password,cipherText);
+    }
+
     public String passwordDecoder(){
         return null;
     }

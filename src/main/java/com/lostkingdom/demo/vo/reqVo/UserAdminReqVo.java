@@ -18,5 +18,6 @@ public class UserAdminReqVo extends BaseReqVo {
     private String password;
     private String status;
     private String phone;
+    private String oldPassword;
 
 }

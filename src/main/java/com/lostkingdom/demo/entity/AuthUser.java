@@ -11,7 +11,7 @@ import java.util.List;
  * @author yin.jiang
  * @date 2019/8/13 11:34
  */
-public class AuthUser extends BaseEntity implements Serializable {
+public class AuthUser extends BaseEntity {
 
     @Excel(name = "id",orderNum = "0")
     private Long id;
@@ -83,4 +83,6 @@ public class AuthUser extends BaseEntity implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+
 }

@@ -61,4 +61,9 @@ public class UserAdminController {
         return null;
     }
 
+    @RequestMapping("changePassword")
+    public Message changePassword(@RequestBody UserAdminReqVo vo){
+        return Message.success(IUserAdminService.changePassword(vo));
+    }
+
 }

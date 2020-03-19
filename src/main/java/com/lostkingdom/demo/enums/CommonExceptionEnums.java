@@ -11,8 +11,11 @@ public enum CommonExceptionEnums {
     NO_PASSWORD("1002","密码不能为空"),
     NO_TRUENAME("1003","用户姓名不能为空"),
     NO_CREATOR_INFO("1004","创建人信息为空"),
-    NO_USER_ID("1004","用户主键不能为空"),
-    NO_USER_INFO("1004","用户信息为空"),
+    NO_USER_ID("1005","用户主键不能为空"),
+    NO_USER_INFO("1006","用户信息为空"),
+    NEW_PASSWORD_IS_NULL("1008","新密码不能为空"),
+    OLD_PASSWORD_IS_NULL("1009","旧密码不能为空"),
+    OLD_PASSWORD_IS_NOT_RIGHT("1010","旧密码不正确"),
 
 
     ;

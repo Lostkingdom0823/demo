@@ -10,10 +10,12 @@
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="create_timestamp" property="createTimestamp" jdbcType="TIMESTAMP"/>
         <result column="create_by" property="createBy" jdbcType="BIGINT"/>
-        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_username" property="createUsername" jdbcType="VARCHAR"/>
         <result column="update_timestamp" property="updateTimestamp" jdbcType="TIMESTAMP"/>
         <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
-        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_username" property="updateUsername" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+
 
         <collection property="userRoles" resultMap="userRoles"/>
     </resultMap>
@@ -72,5 +74,10 @@
     <select id="getAllAuthUserByUsername" parameterType="java.lang.String" resultType="com.lostkingdom.demo.entity.AuthUser">
         SELECT * FROM auth_user where username = #{username}
     </select>
+
+    <update id="updateById" parameterType="com.lostkingdom.demo.entity.AuthUser">
+        update auth_user set name = #{name},phone = #{phone},status = #{status},update_by = #{updateBy},update_username = #{updateUsername},update_timestamp = #{updateTimestamp} where id = #{id}
+    </update>
+
 
 </mapper>

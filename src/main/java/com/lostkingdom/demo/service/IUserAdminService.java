@@ -16,4 +16,6 @@ public interface IUserAdminService {
 
     AuthUser queryUserDetail(UserAdminReqVo vo);
 
+    Integer changePassword(UserAdminReqVo vo);
+
 }

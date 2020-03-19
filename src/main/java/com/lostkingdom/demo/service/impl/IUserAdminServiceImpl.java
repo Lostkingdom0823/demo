@@ -81,6 +81,9 @@ public class IUserAdminServiceImpl implements IUserAdminService {
             throw new DemoException(CommonExceptionEnums.NO_USER_INFO);
         }
         oldUser.setStatus(UserStatusEnum.DISABLE.getValue());
+        oldUser.setUpdateBy(updater.getId());
+        oldUser.setUpdateTimestamp(new Date());
+        oldUser.setUpdateUsername(updater.getUpdateUsername());
         return authUserMapper.updateById(oldUser);
     }
 
@@ -130,5 +133,54 @@ public class IUserAdminServiceImpl implements IUserAdminService {
     @Override
     public AuthUser queryUserDetail(UserAdminReqVo vo) {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public Integer changePassword(UserAdminReqVo vo) {
+        if(vo.getId() == null || vo.getId() == 0){
+            throw new DemoException(CommonExceptionEnums.NO_USER_ID);
+        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AuthUser updater = authUserMapper.selectUser(user.getUsername());
+        if(updater == null){
+            throw new DemoException(CommonExceptionEnums.NO_CREATOR_INFO);
+        }
+        //
+        AuthUser oldUser = authUserMapper.selectById(vo.getId());
+        if(oldUser == null){
+            throw new DemoException(CommonExceptionEnums.NO_USER_INFO);
+        }
+        passwordCheck(oldUser,vo);
+        oldUser.setPassword(BCryptPasswordUtil.passwordEncoder(vo.getPassword()));
+        return authUserMapper.updateById(oldUser);
+    }
+
+    private void passwordCheck(AuthUser user, UserAdminReqVo vo){
+        if(StringUtils.isEmpty(vo.getPassword())){
+            throw new DemoException(CommonExceptionEnums.NEW_PASSWORD_IS_NULL);
+        }
+        if(StringUtils.isEmpty(vo.getOldPassword())){
+            throw new DemoException(CommonExceptionEnums.OLD_PASSWORD_IS_NULL);
+        }
+        if(!BCryptPasswordUtil.passwordCheck(vo.getOldPassword(),user.getPassword())){
+            throw new DemoException(CommonExceptionEnums.OLD_PASSWORD_IS_NOT_RIGHT);
+        }
+    }
+
+    private void userInfoCheck(UserAdminReqVo vo){
+        if(vo.getId() == null || vo.getId() == 0){
+            throw new DemoException(CommonExceptionEnums.NO_USER_ID);
+        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AuthUser updater = authUserMapper.selectUser(user.getUsername());
+        if(updater == null){
+            throw new DemoException(CommonExceptionEnums.NO_CREATOR_INFO);
+        }
+        //
+        AuthUser oldUser = authUserMapper.selectById(vo.getId());
+        if(oldUser == null){
+            throw new DemoException(CommonExceptionEnums.NO_USER_INFO);
+        }
     }
 }
