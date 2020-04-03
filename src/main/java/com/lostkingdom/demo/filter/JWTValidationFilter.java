@@ -6,7 +6,6 @@ import com.lostkingdom.demo.jwt.JWTTokenGenerator;
 import com.lostkingdom.demo.jwt.JWTTokenPair;
 import com.lostkingdom.demo.jwt.JWTTokenStorage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
