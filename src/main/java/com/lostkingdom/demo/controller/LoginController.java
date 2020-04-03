@@ -6,6 +6,8 @@ import com.lostkingdom.demo.enums.CommonExceptionEnums;
 import com.lostkingdom.demo.exception.DemoException;
 import com.lostkingdom.demo.mapper.AuthUserMapper;
 import com.lostkingdom.demo.vo.Message;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019/10/18 14:35
  */
 @RestController
+@Api(value = "登录接口")
 public class LoginController extends BaseController {
 
     @Autowired

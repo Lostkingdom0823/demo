@@ -8,11 +8,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author yin.jiang
  * @date 2019/10/18 14:36
  */
+@RestController
 public class BaseController {
 
     @Autowired
