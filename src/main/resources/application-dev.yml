@@ -22,7 +22,10 @@ spring:
     removeAbandoned: true
     removeAbandonedTimeout: 1800
     removeAbandonedTimeoutMillis: 1800000
-#redis
+  data:
+    mongodb:
+      uri: mongodb://demo:wsldth123@localhost:27017/demo
+  #redis
   redis:
     database: 0
     host: 127.0.0.1
